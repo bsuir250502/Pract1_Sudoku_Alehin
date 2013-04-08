@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int array[9][9], depth;
+int array[9][9];
 int outputArray[9][9];
 
 int input_value(int x, int y, int value)
@@ -99,7 +99,6 @@ int input_value(int x, int y, int value)
 int backtrack(int x, int y)
 {
     int temp, i;
-    depth++;
     if (outputArray[x][y] == 0) {
         for (i = 1; i < 10; i++) {
             temp = input_value(x, y, i);
@@ -139,11 +138,10 @@ int backtrack(int x, int y)
 
 int main()
 {
-    int i, j, h;
+    int i, j;
     FILE *inFile, *outFile;
     inFile = fopen("sudoku.in", "r+");
     outFile = fopen("sudoku.out", "w+");
-    for (h = 0; h < 1; h++) {
         fprintf(outFile, "Original outputArray\n");
         for (i = 0; i < 9; i++) {
             fscanf(inFile, "%d %d %d %d %d %d %d %d %d",
@@ -151,7 +149,6 @@ int main()
                    &array[i][3], &array[i][4], &array[i][5],
                    &array[i][6], &array[i][7], &array[i][8]);
         }
-
 
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
@@ -166,17 +163,16 @@ int main()
             fprintf(outFile, "\n");
         }
         if (backtrack(0, 0)) {
-            fprintf(outFile, "Soln is :\n");
+            fprintf(outFile, "Solution is :");
             for (i = 0; i < 9; i++) {
+                fprintf(outFile, "\n");
                 for (j = 0; j < 9; j++) {
                     fprintf(outFile, "%d ", outputArray[i][j]);
                 }
-                fprintf(outFile, "\n");
             }
         } else
-            fprintf(outFile, "No Soln\n");
-        fprintf(outFile, "#%d# solved, depth - %d\n", h + 1, depth);
-    }
+            fprintf(outFile, "No solution\n");
     fclose(inFile);
+    fclose(outFile);
     return 0;
 }
