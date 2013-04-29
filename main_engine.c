@@ -1,5 +1,44 @@
 #include "main_engine.h"
 
+int backtrack(int x, int y)
+{
+    int temp, i;
+    if (outputArray[x][y] == 0) {
+        for (i = 1; i < 10; i++) {
+            temp = input_value(x, y, i);
+            if (temp > 0) {
+                outputArray[x][y] = temp;
+                if (x == 8 && y == 8) {
+                    return 1;
+                } else if (x == 8) {
+                    if (backtrack(0, y + 1))
+                        return 1;
+                } else {
+                    if (backtrack(x + 1, y))
+                        return 1;
+                }
+            }
+        }
+        if (i == 10) {
+            if (outputArray[x][y] != array[x][y])
+                outputArray[x][y] = 0;
+            return 0;
+        }
+    } else {
+        if (x == 8 && y == 8) {
+            return 1;
+        } else if (x == 8) {
+            if (backtrack(0, y + 1))
+                return 1;
+        } else {
+            if (backtrack(x + 1, y))
+                return 1;
+        }
+    }
+    return 0;
+}
+
+
 int input_value(int x, int y, int value)
 {
     int i, j;
@@ -90,42 +129,4 @@ int input_value(int x, int y, int value)
         }
     }
     return value;
-}
-
-int backtrack(int x, int y)
-{
-    int temp, i;
-    if (outputArray[x][y] == 0) {
-        for (i = 1; i < 10; i++) {
-            temp = input_value(x, y, i);
-            if (temp > 0) {
-                outputArray[x][y] = temp;
-                if (x == 8 && y == 8) {
-                    return 1;
-                } else if (x == 8) {
-                    if (backtrack(0, y + 1))
-                        return 1;
-                } else {
-                    if (backtrack(x + 1, y))
-                        return 1;
-                }
-            }
-        }
-        if (i == 10) {
-            if (outputArray[x][y] != array[x][y])
-                outputArray[x][y] = 0;
-            return 0;
-        }
-    } else {
-        if (x == 8 && y == 8) {
-            return 1;
-        } else if (x == 8) {
-            if (backtrack(0, y + 1))
-                return 1;
-        } else {
-            if (backtrack(x + 1, y))
-                return 1;
-        }
-    }
-    return 0;
 }
