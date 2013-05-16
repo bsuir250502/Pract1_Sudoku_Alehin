@@ -1,11 +1,10 @@
 #ifndef _MYLIB_H_
 #define _MYLIB_H_
+#define PUZZLE_CELLS 81
+#define PEER_LEN 20
 #include <stdio.h>
 #include <stdlib.h>
 
-int array[9][9];
-int outputArray[9][9];
-
-int input_value(int, int, int);
-int backtrack(int, int);
+int check_value(int, int, int*, int*);
+int backtrack(int, int*, int*);
 #endif

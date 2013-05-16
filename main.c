@@ -2,40 +2,28 @@
 
 int main()
 {
-    int i, j;
+    int i, j, k = 0, *array, *outputArray;
     FILE *inFile, *outFile;
+    array = (int*) calloc(PUZZLE_CELLS, sizeof(int));
+    outputArray = (int*) calloc(PUZZLE_CELLS, sizeof(int));
     inFile = fopen("sudoku.in", "r+");
     outFile = fopen("sudoku.out", "w+");
-        fprintf(outFile, "Original outputArray\n");
-        for (i = 0; i < 9; i++) {
-            fscanf(inFile, "%d %d %d %d %d %d %d %d %d",
-                   &array[i][0], &array[i][1], &array[i][2],
-                   &array[i][3], &array[i][4], &array[i][5],
-                   &array[i][6], &array[i][7], &array[i][8]);
-        }
+        for (i = 0; i < PUZZLE_CELLS; i++)
+            fscanf(inFile, "%d", &array[i]);
 
-        for (i = 0; i < 9; i++) {
-            for (j = 0; j < 9; j++) {
-                outputArray[i][j] = array[i][j];
-            }
-        }
+        for (i = 0; i < PUZZLE_CELLS; i++)
+            outputArray[i] = array[i];
 
-        for (i = 0; i < 9; i++) {
-            for (j = 0; j < 9; j++) {
-                fprintf(outFile, "%d ", array[i][j]);
-            }
-            fprintf(outFile, "\n");
-        }
-        if (backtrack(0, 0)) {
-            fprintf(outFile, "Solution is :");
+        if (backtrack(0, array, outputArray)) {
             for (i = 0; i < 9; i++) {
+                for (j = 0; j < 9; j++)
+                    fprintf(outFile, "%d ", outputArray[k++]);
                 fprintf(outFile, "\n");
-                for (j = 0; j < 9; j++) {
-                    fprintf(outFile, "%d ", outputArray[i][j]);
-                }
             }
         } else
             fprintf(outFile, "No solution\n");
+    free(array);
+    free(outputArray);
     fclose(inFile);
     fclose(outFile);
     return 0;
